@@ -1,6 +1,7 @@
 # =============================================================================
-# Ontologia degli Elenchi Pubblicati (PublishedRegistry)
-# Esempio completo con definizione classi e istanze di esempio
+# Ontologia dei Registri Pubblicati - Profilo Applicativo Italiano (PREG-AP_IT)
+# Published Registry Ontology
+# Versione 0.2 - Revisione completa
 # =============================================================================
 
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -9,38 +10,83 @@
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix dct:    <http://purl.org/dc/terms/> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix adms:   <http://www.w3.org/ns/adms#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix vcard:  <http://www.w3.org/2006/vcard/ns#> .
+@prefix ndc:    <https://w3id.org/italia/onto/NDC/> .
 
-# Ontologie Italia esistenti
+# Ontologie OntoPiA
 @prefix l0:     <https://w3id.org/italia/onto/l0/> .
-@prefix TI:     <https://w3id.org/italia/onto/TI/> .
 @prefix COV:    <https://w3id.org/italia/onto/COV/> .
-@prefix CPV:    <https://w3id.org/italia/onto/CPV/> .
-@prefix CLV:    <https://w3id.org/italia/onto/CLV/> .
-@prefix CPEV:   <https://w3id.org/italia/onto/CPEV/> .
 
-# Ontologia esistente albi professionali
+# Ontologia albi professionali (per allineamento)
 @prefix ssn:    <https://w3id.org/italia/social-security/onto/socialSafetyNet/> .
 
-# Nuova ontologia proposta
-@prefix PREG:   <https://w3id.org/italia/onto/PublishedRegistry/> .
+# Questa ontologia
+@prefix PREG: <https://w3id.org/italia/onto/PREG/> .
 
 
 # =============================================================================
-# DEFINIZIONE ONTOLOGIA
+# METADATI ONTOLOGIA
 # =============================================================================
 
-<https://w3id.org/italia/onto/PublishedRegistry>
-    a owl:Ontology ;
-    owl:versionInfo "0.1.0" ;
-    dct:title "Ontologia degli Elenchi Pubblicati"@it ;
-    dct:title "Published Registry Ontology"@en ;
-    dct:description """Ontologia per la modellazione di elenchi e registri
-        pubblicati da organizzazioni. Generalizza il concetto di Albo Professionale
-        per coprire elenchi di persone, oggetti materiali e immateriali."""@it ;
-    dct:creator "Schema.gov.it Community" ;
-    dct:issued "2024-01-01"^^xsd:date ;
+<https://w3id.org/italia/onto/PREG>
+    a owl:Ontology , adms:SemanticAsset ;
+
+    # --- Identificazione ---
+    owl:versionInfo "0.2" ;
+    owl:versionIRI <https://w3id.org/italia/onto/PREG/0.2> ;
+
+    # --- Titoli e descrizioni ---
+    dct:title "Ontologia dei Registri Pubblicati (PREG-AP_IT)"@it ;
+    dct:title "Published Registry Ontology (PREG-AP_IT)"@en ;
+    rdfs:label "Ontologia dei Registri Pubblicati (PREG-AP_IT)"@it ;
+    rdfs:label "Published Registry Ontology (PREG-AP_IT)"@en ;
+    dct:description """Ontologia per la modellazione di elenchi e registri pubblicati
+        da organizzazioni. Generalizza il concetto di Albo Professionale per coprire
+        elenchi di persone, organizzazioni, beni materiali e immateriali, eventi
+        e servizi."""@it ;
+    dct:description """Ontology for modeling lists and registries published by
+        organizations. Generalizes the concept of Professional Register to cover
+        lists of persons, organizations, tangible and intangible assets, events
+        and services."""@en ;
+    rdfs:comment """Ontologia per la modellazione di elenchi e registri pubblicati
+        da organizzazioni. Generalizza il concetto di Albo Professionale per coprire
+        elenchi di persone, organizzazioni, beni materiali e immateriali, eventi
+        e servizi."""@it ;
+    rdfs:comment """Ontology for modeling lists and registries published by
+        organizations. Generalizes the concept of Professional Register to cover
+        lists of persons, organizations, tangible and intangible assets, events
+        and services."""@en ;
+
+    # --- Date ---
+    dct:issued "2025-01-01"^^xsd:date ;
+    dct:modified "2025-01-01"^^xsd:date ;
+
+    # --- Lingua ---
+    dct:language <http://publications.europa.eu/resource/authority/language/ITA> ,
+                 <http://publications.europa.eu/resource/authority/language/ENG> ;
+
+    # --- Licenza e diritti ---
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dct:rightsHolder <https://w3id.org/italia/data/organization/schema-gov-it-community> ;
+
+    # --- Provenienza ---
+    dct:creator <https://w3id.org/italia/data/organization/schema-gov-it-community> ;
+    dct:publisher <https://w3id.org/italia/data/organization/schema-gov-it-community> ;
+
+    # --- Catalogazione ---
+    dcat:theme <http://publications.europa.eu/resource/authority/data-theme/GOVE> ;
+    dct:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/IRREG> ;
+    adms:status <http://purl.org/adms/status/UnderDevelopment> ;
+    ndc:keyConcept "published-registry" ;
+
+    # --- Provenienza versione ---
+    prov:wasDerivedFrom <https://w3id.org/italia/onto/PREG/0.1> ;
+
+    # --- Dipendenze ---
     owl:imports <https://w3id.org/italia/onto/l0> ;
-    owl:imports <https://w3id.org/italia/onto/TI> ;
     owl:imports <https://w3id.org/italia/onto/COV> .
 
 
@@ -58,29 +104,41 @@ PREG:PublishedRegistry
     rdfs:label "Registro Pubblicato"@it ;
     rdfs:label "Published Registry"@en ;
     rdfs:comment """Un elenco o registro ufficialmente pubblicato da un'organizzazione.
-        Può contenere persone, organizzazioni, beni, eventi o altri elementi.
-        Esempi: albo professionale, libro soci, graduatoria concorso, inventario beni."""@it ;
+        Puo' contenere persone, organizzazioni, beni, eventi o altri elementi.
+        Esempi: albo professionale, libro soci, graduatoria concorso,
+        inventario beni."""@it ;
     rdfs:comment """A list or registry officially published by an organization.
         May contain persons, organizations, assets, events or other items.
-        Examples: professional register, membership roll, competition ranking, asset inventory."""@en ;
-    owl:versionInfo "stabile"@it .
+        Examples: professional register, membership roll, competition ranking,
+        asset inventory."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> ;
+    owl:versionInfo "stabile"@it ;
+    owl:versionInfo "stable"@en .
+
 
 # -----------------------------------------------------------------------------
-# RegistryEntry - Voce del Registro
+# RegistryRecord - Voce/Record del Registro
 # -----------------------------------------------------------------------------
+# NOTA: Non e' un TimeIndexedEvent. Una voce del registro e' un record
+# informativo (la riga del catalogo), non un evento di inserimento.
+# La temporalita' (data iscrizione/cessazione) e' gestita tramite
+# datatype properties dedicate.
 
-PREG:RegistryEntry
+PREG:RegistryRecord
     a owl:Class ;
-    rdfs:subClassOf TI:TimeIndexedEvent ;
+    rdfs:subClassOf l0:Entity ;
     rdfs:label "Voce del Registro"@it ;
-    rdfs:label "Registry Entry"@en ;
-    rdfs:comment """Una singola voce/iscrizione in un registro pubblicato.
-        Rappresenta l'evento di inserimento di un'entità nel registro,
-        con validità temporale (data inizio, eventuale data fine)."""@it ;
-    rdfs:comment """A single entry/registration in a published registry.
-        Represents the event of inserting an entity into the registry,
-        with temporal validity (start date, optional end date)."""@en ;
-    owl:versionInfo "stabile"@it .
+    rdfs:label "Registry Record"@en ;
+    rdfs:comment """Una singola voce in un registro pubblicato. Rappresenta
+        il record informativo che collega un'entita' (persona, organizzazione,
+        bene, evento) al registro, con validita' temporale e stato."""@it ;
+    rdfs:comment """A single entry in a published registry. Represents the
+        informational record linking an entity (person, organization, asset,
+        event) to the registry, with temporal validity and status."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> ;
+    owl:versionInfo "stabile"@it ;
+    owl:versionInfo "stable"@en .
+
 
 # -----------------------------------------------------------------------------
 # RegistrySection - Sezione del Registro
@@ -92,26 +150,31 @@ PREG:RegistrySection
     rdfs:label "Sezione del Registro"@it ;
     rdfs:label "Registry Section"@en ;
     rdfs:comment """Suddivisione interna di un registro pubblicato.
-        Esempi: Sezione A/B di un albo, categorie di soci, fasce di graduatoria."""@it ;
-    owl:versionInfo "stabile"@it .
+        Esempi: Sezione A/B di un albo, categorie di soci,
+        fasce di graduatoria."""@it ;
+    rdfs:comment """Internal subdivision of a published registry.
+        Examples: Section A/B of a professional register, membership
+        categories, ranking bands."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> ;
+    owl:versionInfo "stabile"@it ;
+    owl:versionInfo "stable"@en .
 
 
 # =============================================================================
-# SPECIALIZZAZIONI
+# SPECIALIZZAZIONI DI PublishedRegistry
 # =============================================================================
 
-# -----------------------------------------------------------------------------
-# Tipi di Registro
-# -----------------------------------------------------------------------------
-
-PREG:ProfessionalRegister
+PREG:ProfessionalRegistry
     a owl:Class ;
     rdfs:subClassOf PREG:PublishedRegistry ;
     rdfs:label "Albo Professionale"@it ;
-    rdfs:label "Professional Register"@en ;
+    rdfs:label "Professional Registry"@en ;
     rdfs:comment """Registro in cui sono raccolti i nomi e i dati di tutte
         le persone abilitate a esercitare una professione regolamentata."""@it ;
-    owl:equivalentClass ssn:AlboProfessionale .
+    rdfs:comment """A register containing the names and data of all persons
+        authorized to practice a regulated profession."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> ;
+    skos:closeMatch ssn:AlboProfessionale .
 
 PREG:MembershipRoll
     a owl:Class ;
@@ -119,15 +182,21 @@ PREG:MembershipRoll
     rdfs:label "Libro Soci"@it ;
     rdfs:label "Membership Roll"@en ;
     rdfs:comment """Registro contenente l'elenco dei soci di un'associazione,
-        cooperativa o altra organizzazione associativa."""@it .
+        cooperativa o altra organizzazione associativa."""@it ;
+    rdfs:comment """A register containing the list of members of an association,
+        cooperative or other membership organization."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
 PREG:SelectionList
     a owl:Class ;
     rdfs:subClassOf PREG:PublishedRegistry ;
-    rdfs:label "Graduatoria/Elenco Ammessi"@it ;
+    rdfs:label "Graduatoria"@it ;
     rdfs:label "Selection List"@en ;
     rdfs:comment """Elenco ordinato di persone ammesse a una selezione,
-        concorso o procedura comparativa."""@it .
+        concorso o procedura comparativa."""@it ;
+    rdfs:comment """An ordered list of persons admitted to a selection,
+        competition or comparative procedure."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
 PREG:QualifiedSupplierList
     a owl:Class ;
@@ -135,7 +204,10 @@ PREG:QualifiedSupplierList
     rdfs:label "Elenco Operatori Qualificati"@it ;
     rdfs:label "Qualified Supplier List"@en ;
     rdfs:comment """Elenco di operatori economici qualificati per
-        l'affidamento di lavori, servizi o forniture."""@it .
+        l'affidamento di lavori, servizi o forniture."""@it ;
+    rdfs:comment """A list of qualified economic operators for the
+        award of works, services or supplies."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
 PREG:AssetRegistry
     a owl:Class ;
@@ -143,7 +215,10 @@ PREG:AssetRegistry
     rdfs:label "Registro Beni"@it ;
     rdfs:label "Asset Registry"@en ;
     rdfs:comment """Inventario o registro di beni materiali o immateriali
-        di proprietà o in gestione a un'organizzazione."""@it .
+        di proprieta' o in gestione a un'organizzazione."""@it ;
+    rdfs:comment """An inventory or register of tangible or intangible assets
+        owned or managed by an organization."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
 PREG:EventCalendar
     a owl:Class ;
@@ -151,208 +226,273 @@ PREG:EventCalendar
     rdfs:label "Calendario Eventi"@it ;
     rdfs:label "Event Calendar"@en ;
     rdfs:comment """Elenco pubblicato di eventi, manifestazioni o
-        appuntamenti programmati."""@it .
+        appuntamenti programmati."""@it ;
+    rdfs:comment """A published list of events, shows or
+        scheduled appointments."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-# -----------------------------------------------------------------------------
-# Tipi di Voce
-# -----------------------------------------------------------------------------
+
+# =============================================================================
+# SPECIALIZZAZIONI DI RegistryRecord
+# =============================================================================
 
 PREG:ProfessionalRegistration
     a owl:Class ;
-    rdfs:subClassOf PREG:RegistryEntry ;
+    rdfs:subClassOf PREG:RegistryRecord ;
     rdfs:label "Iscrizione Albo Professionale"@it ;
     rdfs:label "Professional Registration"@en ;
-    owl:equivalentClass ssn:IscrizioneAlboProfessionale .
+    rdfs:comment """Voce del registro relativa all'iscrizione di un
+        professionista in un albo professionale."""@it ;
+    rdfs:comment """Registry record for the registration of a professional
+        in a professional register."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> ;
+    skos:closeMatch ssn:IscrizioneAlboProfessionale .
 
-PREG:MembershipEntry
+PREG:MembershipRecord
     a owl:Class ;
-    rdfs:subClassOf PREG:RegistryEntry ;
+    rdfs:subClassOf PREG:RegistryRecord ;
     rdfs:label "Iscrizione Socio"@it ;
-    rdfs:label "Membership Entry"@en .
+    rdfs:label "Membership Record"@en ;
+    rdfs:comment """Voce del registro relativa all'adesione di un
+        socio a un'organizzazione."""@it ;
+    rdfs:comment """Registry record for the membership of a person
+        in an organization."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:AdmissionEntry
+PREG:AdmissionRecord
     a owl:Class ;
-    rdfs:subClassOf PREG:RegistryEntry ;
+    rdfs:subClassOf PREG:RegistryRecord ;
     rdfs:label "Ammissione"@it ;
-    rdfs:label "Admission Entry"@en .
+    rdfs:label "Admission Record"@en ;
+    rdfs:comment """Voce del registro relativa all'ammissione di una
+        persona a una selezione o concorso."""@it ;
+    rdfs:comment """Registry record for the admission of a person
+        to a selection or competition."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
 PREG:AssetRegistration
     a owl:Class ;
-    rdfs:subClassOf PREG:RegistryEntry ;
+    rdfs:subClassOf PREG:RegistryRecord ;
     rdfs:label "Registrazione Bene"@it ;
-    rdfs:label "Asset Registration"@en .
+    rdfs:label "Asset Registration"@en ;
+    rdfs:comment """Voce del registro relativa alla registrazione di un
+        bene materiale o immateriale."""@it ;
+    rdfs:comment """Registry record for the registration of a tangible
+        or intangible asset."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
 
 # =============================================================================
 # OBJECT PROPERTIES
 # =============================================================================
+# Convenzione OntoPiA: URI in inglese, camelCase, con verbo.
+# Pattern: has[Noun] / is[Noun]Of per coppie inverse.
 
-PREG:pubblicatoDa
+PREG:isPublishedBy
     a owl:ObjectProperty ;
     rdfs:domain PREG:PublishedRegistry ;
     rdfs:range COV:Organization ;
-    rdfs:label "pubblicato da"@it ;
-    rdfs:label "published by"@en ;
-    rdfs:comment "L'organizzazione che pubblica e gestisce il registro."@it .
+    rdfs:label "e' pubblicato da"@it ;
+    rdfs:label "is published by"@en ;
+    rdfs:comment "L'organizzazione che pubblica e gestisce il registro."@it ;
+    rdfs:comment "The organization that publishes and manages the registry."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:haSezione
+PREG:hasSection
     a owl:ObjectProperty ;
     rdfs:domain PREG:PublishedRegistry ;
     rdfs:range PREG:RegistrySection ;
     rdfs:label "ha sezione"@it ;
     rdfs:label "has section"@en ;
-    rdfs:comment "Collega un registro alle sue sezioni/suddivisioni."@it .
+    rdfs:comment "Collega un registro alle sue sezioni."@it ;
+    rdfs:comment "Links a registry to its sections."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:sezioneDelRegistro
+PREG:isSectionOf
     a owl:ObjectProperty ;
-    owl:inverseOf PREG:haSezione ;
+    owl:inverseOf PREG:hasSection ;
     rdfs:domain PREG:RegistrySection ;
     rdfs:range PREG:PublishedRegistry ;
-    rdfs:label "sezione del registro"@it ;
-    rdfs:label "section of registry"@en .
+    rdfs:label "e' sezione di"@it ;
+    rdfs:label "is section of"@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:haVoce
+PREG:hasRecord
     a owl:ObjectProperty ;
     rdfs:domain PREG:PublishedRegistry ;
-    rdfs:range PREG:RegistryEntry ;
+    rdfs:range PREG:RegistryRecord ;
     rdfs:label "ha voce"@it ;
-    rdfs:label "has entry"@en ;
-    rdfs:comment "Collega un registro alle voci/iscrizioni contenute."@it .
+    rdfs:label "has record"@en ;
+    rdfs:comment "Collega un registro alle voci/record contenuti."@it ;
+    rdfs:comment "Links a registry to its records."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:inRegistro
+PREG:isRecordOf
     a owl:ObjectProperty ;
-    owl:inverseOf PREG:haVoce ;
-    rdfs:domain PREG:RegistryEntry ;
+    owl:inverseOf PREG:hasRecord ;
+    rdfs:domain PREG:RegistryRecord ;
     rdfs:range PREG:PublishedRegistry ;
-    rdfs:label "in registro"@it ;
-    rdfs:label "in registry"@en .
+    rdfs:label "e' voce di"@it ;
+    rdfs:label "is record of"@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:inSezione
+PREG:isInSection
     a owl:ObjectProperty ;
-    rdfs:domain PREG:RegistryEntry ;
+    rdfs:domain PREG:RegistryRecord ;
     rdfs:range PREG:RegistrySection ;
-    rdfs:label "in sezione"@it ;
-    rdfs:label "in section"@en .
+    rdfs:label "e' nella sezione"@it ;
+    rdfs:label "is in section"@en ;
+    rdfs:comment "La sezione del registro in cui si trova la voce."@it ;
+    rdfs:comment "The registry section containing the record."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:riferimentoA
+PREG:refersTo
     a owl:ObjectProperty ;
-    rdfs:domain PREG:RegistryEntry ;
+    rdfs:domain PREG:RegistryRecord ;
     rdfs:range l0:Entity ;
-    rdfs:label "riferimento a"@it ;
+    rdfs:label "fa riferimento a"@it ;
     rdfs:label "refers to"@en ;
-    rdfs:comment "L'entità (persona, organizzazione, bene, evento) oggetto dell'iscrizione."@it .
+    rdfs:comment """L'entita' (persona, organizzazione, bene, evento)
+        oggetto della voce del registro."""@it ;
+    rdfs:comment """The entity (person, organization, asset, event)
+        that is the subject of the registry record."""@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:tipoContenuto
+PREG:hasContentType
     a owl:ObjectProperty ;
     rdfs:domain PREG:PublishedRegistry ;
     rdfs:range PREG:RegistryContentType ;
-    rdfs:label "tipo contenuto"@it ;
-    rdfs:label "content type"@en .
+    rdfs:label "ha tipo di contenuto"@it ;
+    rdfs:label "has content type"@en ;
+    rdfs:comment "Il tipo di entita' contenute nel registro."@it ;
+    rdfs:comment "The type of entities contained in the registry."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:tipoRegistro
+PREG:hasRegistryType
     a owl:ObjectProperty ;
     rdfs:domain PREG:PublishedRegistry ;
     rdfs:range PREG:RegistryType ;
-    rdfs:label "tipo registro"@it ;
-    rdfs:label "registry type"@en .
+    rdfs:label "ha tipo di registro"@it ;
+    rdfs:label "has registry type"@en ;
+    rdfs:comment "La classificazione tipologica del registro."@it ;
+    rdfs:comment "The typological classification of the registry."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:stato
+PREG:hasRecordStatus
     a owl:ObjectProperty ;
-    rdfs:domain PREG:RegistryEntry ;
-    rdfs:range PREG:EntryStatus ;
-    rdfs:label "stato"@it ;
-    rdfs:label "status"@en .
+    rdfs:domain PREG:RegistryRecord ;
+    rdfs:range PREG:RecordStatus ;
+    rdfs:label "ha stato della voce"@it ;
+    rdfs:label "has record status"@en ;
+    rdfs:comment "Lo stato corrente della voce nel registro."@it ;
+    rdfs:comment "The current status of the record in the registry."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
 
 # =============================================================================
 # DATATYPE PROPERTIES
 # =============================================================================
+# NOTA: Non si ridefiniscono l0:name e l0:description.
+# Per il nome del registro/sezione usare l0:name.
+# Per la descrizione usare l0:description.
 
-PREG:nome
-    a owl:DatatypeProperty ;
-    rdfs:domain [ a owl:Class ; owl:unionOf (PREG:PublishedRegistry PREG:RegistrySection) ] ;
-    rdfs:range xsd:string ;
-    rdfs:label "nome"@it ;
-    rdfs:label "name"@en .
-
-PREG:descrizione
-    a owl:DatatypeProperty ;
-    rdfs:range xsd:string ;
-    rdfs:label "descrizione"@it ;
-    rdfs:label "description"@en .
-
-PREG:baseNormativa
+PREG:legalBasis
     a owl:DatatypeProperty ;
     rdfs:domain PREG:PublishedRegistry ;
     rdfs:range xsd:string ;
     rdfs:label "base normativa"@it ;
     rdfs:label "legal basis"@en ;
-    rdfs:comment "Riferimento alla norma che istituisce il registro."@it .
+    rdfs:comment "Riferimento alla norma che istituisce il registro."@it ;
+    rdfs:comment "Reference to the legislation establishing the registry."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:dataIstituzione
+PREG:establishmentDate
     a owl:DatatypeProperty ;
     rdfs:domain PREG:PublishedRegistry ;
     rdfs:range xsd:date ;
-    rdfs:label "data istituzione"@it ;
-    rdfs:label "establishment date"@en .
+    rdfs:label "data di istituzione"@it ;
+    rdfs:label "establishment date"@en ;
+    rdfs:comment "La data in cui il registro e' stato istituito."@it ;
+    rdfs:comment "The date on which the registry was established."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:identificativoVoce
+PREG:recordIdentifier
     a owl:DatatypeProperty ;
-    rdfs:domain PREG:RegistryEntry ;
+    rdfs:domain PREG:RegistryRecord ;
     rdfs:range xsd:string ;
-    rdfs:label "identificativo voce"@it ;
-    rdfs:label "entry identifier"@en ;
-    rdfs:comment "Numero o codice univoco della voce nel registro."@it .
+    rdfs:label "identificativo della voce"@it ;
+    rdfs:label "record identifier"@en ;
+    rdfs:comment "Numero o codice univoco della voce nel registro."@it ;
+    rdfs:comment "Unique number or code of the record in the registry."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:dataIscrizione
+PREG:registrationDate
     a owl:DatatypeProperty ;
-    rdfs:domain PREG:RegistryEntry ;
+    rdfs:domain PREG:RegistryRecord ;
     rdfs:range xsd:date ;
-    rdfs:label "data iscrizione"@it ;
-    rdfs:label "registration date"@en .
+    rdfs:label "data di iscrizione"@it ;
+    rdfs:label "registration date"@en ;
+    rdfs:comment "La data di inserimento della voce nel registro."@it ;
+    rdfs:comment "The date the record was entered in the registry."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:dataCessazione
+PREG:terminationDate
     a owl:DatatypeProperty ;
-    rdfs:domain PREG:RegistryEntry ;
+    rdfs:domain PREG:RegistryRecord ;
     rdfs:range xsd:date ;
-    rdfs:label "data cessazione"@it ;
-    rdfs:label "termination date"@en .
+    rdfs:label "data di cessazione"@it ;
+    rdfs:label "termination date"@en ;
+    rdfs:comment "La data di cancellazione o scadenza della voce."@it ;
+    rdfs:comment "The date the record was cancelled or expired."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:motivoIscrizione
+PREG:registrationReason
     a owl:DatatypeProperty ;
-    rdfs:domain PREG:RegistryEntry ;
+    rdfs:domain PREG:RegistryRecord ;
     rdfs:range xsd:string ;
-    rdfs:label "motivo iscrizione"@it ;
-    rdfs:label "registration reason"@en .
+    rdfs:label "motivo dell'iscrizione"@it ;
+    rdfs:label "registration reason"@en ;
+    rdfs:comment "Il motivo o titolo dell'iscrizione nel registro."@it ;
+    rdfs:comment "The reason or basis for registration."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:motivoCessazione
+PREG:terminationReason
     a owl:DatatypeProperty ;
-    rdfs:domain PREG:RegistryEntry ;
+    rdfs:domain PREG:RegistryRecord ;
     rdfs:range xsd:string ;
-    rdfs:label "motivo cessazione"@it ;
-    rdfs:label "termination reason"@en .
+    rdfs:label "motivo della cessazione"@it ;
+    rdfs:label "termination reason"@en ;
+    rdfs:comment "Il motivo della cancellazione dal registro."@it ;
+    rdfs:comment "The reason for removal from the registry."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:annotazioni
+PREG:notes
     a owl:DatatypeProperty ;
-    rdfs:domain PREG:RegistryEntry ;
+    rdfs:domain PREG:RegistryRecord ;
     rdfs:range xsd:string ;
     rdfs:label "annotazioni"@it ;
-    rdfs:label "notes"@en .
+    rdfs:label "notes"@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:posizione
+PREG:position
     a owl:DatatypeProperty ;
-    rdfs:domain PREG:RegistryEntry ;
+    rdfs:domain PREG:RegistryRecord ;
     rdfs:range xsd:integer ;
-    rdfs:label "posizione"@it ;
+    rdfs:label "posizione in graduatoria"@it ;
     rdfs:label "position"@en ;
-    rdfs:comment "Posizione in graduatoria (per SelectionList)."@it .
+    rdfs:comment "Posizione in graduatoria (per SelectionList)."@it ;
+    rdfs:comment "Ranking position (for SelectionList)."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:punteggio
+PREG:score
     a owl:DatatypeProperty ;
-    rdfs:domain PREG:RegistryEntry ;
+    rdfs:domain PREG:RegistryRecord ;
     rdfs:range xsd:decimal ;
     rdfs:label "punteggio"@it ;
-    rdfs:label "score"@en .
+    rdfs:label "score"@en ;
+    rdfs:comment "Punteggio ottenuto (per SelectionList)."@it ;
+    rdfs:comment "Score achieved (for SelectionList)."@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
 
 # =============================================================================
@@ -360,288 +500,150 @@ PREG:punteggio
 # =============================================================================
 
 # -----------------------------------------------------------------------------
-# RegistryContentType - Tipo di Contenuto
+# RegistryContentType - Tipo di Contenuto del Registro
 # -----------------------------------------------------------------------------
+
+<https://w3id.org/italia/controlled-vocabulary/PREG/registry-content-type>
+    a skos:ConceptScheme ;
+    rdfs:label "Tipi di Contenuto del Registro"@it ;
+    rdfs:label "Registry Content Types"@en ;
+    dct:title "Tipi di Contenuto del Registro"@it ;
+    dct:title "Registry Content Types"@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
 PREG:RegistryContentType
     a owl:Class ;
     rdfs:subClassOf skos:Concept ;
-    rdfs:label "Tipo di Contenuto del Registro"@it .
+    rdfs:label "Tipo di Contenuto del Registro"@it ;
+    rdfs:label "Registry Content Type"@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:ContentType-Person a PREG:RegistryContentType, skos:Concept ;
-    skos:prefLabel "Persone"@it, "Persons"@en ;
-    skos:definition "Il registro contiene persone fisiche."@it .
+PREG:ContentType-Person a PREG:RegistryContentType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-content-type> ;
+    skos:prefLabel "Persone"@it , "Persons"@en ;
+    skos:definition "Il registro contiene persone fisiche."@it ;
+    skos:definition "The registry contains natural persons."@en .
 
-PREG:ContentType-Organization a PREG:RegistryContentType, skos:Concept ;
-    skos:prefLabel "Organizzazioni"@it, "Organizations"@en ;
-    skos:definition "Il registro contiene enti e organizzazioni."@it .
+PREG:ContentType-Organization a PREG:RegistryContentType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-content-type> ;
+    skos:prefLabel "Organizzazioni"@it , "Organizations"@en ;
+    skos:definition "Il registro contiene enti e organizzazioni."@it ;
+    skos:definition "The registry contains organizations."@en .
 
-PREG:ContentType-RealEstate a PREG:RegistryContentType, skos:Concept ;
-    skos:prefLabel "Beni Immobili"@it, "Real Estate"@en ;
-    skos:definition "Il registro contiene beni immobili."@it .
+PREG:ContentType-RealEstate a PREG:RegistryContentType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-content-type> ;
+    skos:prefLabel "Beni Immobili"@it , "Real Estate"@en ;
+    skos:definition "Il registro contiene beni immobili."@it ;
+    skos:definition "The registry contains real estate assets."@en .
 
-PREG:ContentType-MovableAsset a PREG:RegistryContentType, skos:Concept ;
-    skos:prefLabel "Beni Mobili"@it, "Movable Assets"@en ;
-    skos:definition "Il registro contiene beni mobili."@it .
+PREG:ContentType-MovableAsset a PREG:RegistryContentType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-content-type> ;
+    skos:prefLabel "Beni Mobili"@it , "Movable Assets"@en ;
+    skos:definition "Il registro contiene beni mobili."@it ;
+    skos:definition "The registry contains movable assets."@en .
 
-PREG:ContentType-Event a PREG:RegistryContentType, skos:Concept ;
-    skos:prefLabel "Eventi"@it, "Events"@en ;
-    skos:definition "Il registro contiene eventi."@it .
+PREG:ContentType-Event a PREG:RegistryContentType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-content-type> ;
+    skos:prefLabel "Eventi"@it , "Events"@en ;
+    skos:definition "Il registro contiene eventi."@it ;
+    skos:definition "The registry contains events."@en .
 
-PREG:ContentType-Service a PREG:RegistryContentType, skos:Concept ;
-    skos:prefLabel "Servizi"@it, "Services"@en ;
-    skos:definition "Il registro contiene servizi."@it .
+PREG:ContentType-Service a PREG:RegistryContentType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-content-type> ;
+    skos:prefLabel "Servizi"@it , "Services"@en ;
+    skos:definition "Il registro contiene servizi."@it ;
+    skos:definition "The registry contains services."@en .
+
 
 # -----------------------------------------------------------------------------
-# EntryStatus - Stato della Voce
+# RecordStatus - Stato della Voce
 # -----------------------------------------------------------------------------
 
-PREG:EntryStatus
+<https://w3id.org/italia/controlled-vocabulary/PREG/record-status>
+    a skos:ConceptScheme ;
+    rdfs:label "Stati della Voce del Registro"@it ;
+    rdfs:label "Registry Record Statuses"@en ;
+    dct:title "Stati della Voce del Registro"@it ;
+    dct:title "Registry Record Statuses"@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
+
+PREG:RecordStatus
     a owl:Class ;
     rdfs:subClassOf skos:Concept ;
-    rdfs:label "Stato della Voce"@it .
+    rdfs:label "Stato della Voce"@it ;
+    rdfs:label "Record Status"@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:Status-Active a PREG:EntryStatus, skos:Concept ;
-    skos:prefLabel "Attivo"@it, "Active"@en ;
-    skos:definition "La voce è attiva e vigente."@it .
+PREG:Status-Active a PREG:RecordStatus , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/record-status> ;
+    skos:prefLabel "Attivo"@it , "Active"@en ;
+    skos:definition "La voce e' attiva e vigente."@it ;
+    skos:definition "The record is active and in force."@en .
 
-PREG:Status-Suspended a PREG:EntryStatus, skos:Concept ;
-    skos:prefLabel "Sospeso"@it, "Suspended"@en ;
-    skos:definition "La voce è temporaneamente sospesa."@it .
+PREG:Status-Suspended a PREG:RecordStatus , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/record-status> ;
+    skos:prefLabel "Sospeso"@it , "Suspended"@en ;
+    skos:definition "La voce e' temporaneamente sospesa."@it ;
+    skos:definition "The record is temporarily suspended."@en .
 
-PREG:Status-Cancelled a PREG:EntryStatus, skos:Concept ;
-    skos:prefLabel "Cancellato"@it, "Cancelled"@en ;
-    skos:definition "La voce è stata cancellata dal registro."@it .
+PREG:Status-Cancelled a PREG:RecordStatus , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/record-status> ;
+    skos:prefLabel "Cancellato"@it , "Cancelled"@en ;
+    skos:definition "La voce e' stata cancellata dal registro."@it ;
+    skos:definition "The record has been removed from the registry."@en .
 
-PREG:Status-Expired a PREG:EntryStatus, skos:Concept ;
-    skos:prefLabel "Scaduto"@it, "Expired"@en ;
-    skos:definition "La voce è scaduta per decorso dei termini."@it .
+PREG:Status-Expired a PREG:RecordStatus , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/record-status> ;
+    skos:prefLabel "Scaduto"@it , "Expired"@en ;
+    skos:definition "La voce e' scaduta per decorso dei termini."@it ;
+    skos:definition "The record has expired."@en .
 
-PREG:Status-Pending a PREG:EntryStatus, skos:Concept ;
-    skos:prefLabel "In Attesa"@it, "Pending"@en ;
-    skos:definition "La voce è in attesa di conferma/validazione."@it .
+PREG:Status-Pending a PREG:RecordStatus , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/record-status> ;
+    skos:prefLabel "In Attesa"@it , "Pending"@en ;
+    skos:definition "La voce e' in attesa di conferma o validazione."@it ;
+    skos:definition "The record is awaiting confirmation or validation."@en .
+
 
 # -----------------------------------------------------------------------------
 # RegistryType - Tipo di Registro
 # -----------------------------------------------------------------------------
 
+<https://w3id.org/italia/controlled-vocabulary/PREG/registry-type>
+    a skos:ConceptScheme ;
+    rdfs:label "Tipi di Registro Pubblicato"@it ;
+    rdfs:label "Published Registry Types"@en ;
+    dct:title "Tipi di Registro Pubblicato"@it ;
+    dct:title "Published Registry Types"@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
+
 PREG:RegistryType
     a owl:Class ;
     rdfs:subClassOf skos:Concept ;
-    rdfs:label "Tipo di Registro"@it .
+    rdfs:label "Tipo di Registro"@it ;
+    rdfs:label "Registry Type"@en ;
+    rdfs:isDefinedBy <https://w3id.org/italia/onto/PREG> .
 
-PREG:Type-ProfessionalRegister a PREG:RegistryType, skos:Concept ;
-    skos:prefLabel "Albo Professionale"@it, "Professional Register"@en .
+PREG:Type-ProfessionalRegistry a PREG:RegistryType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-type> ;
+    skos:prefLabel "Albo Professionale"@it , "Professional Registry"@en .
 
-PREG:Type-MembershipRoll a PREG:RegistryType, skos:Concept ;
-    skos:prefLabel "Libro Soci"@it, "Membership Roll"@en .
+PREG:Type-MembershipRoll a PREG:RegistryType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-type> ;
+    skos:prefLabel "Libro Soci"@it , "Membership Roll"@en .
 
-PREG:Type-SelectionList a PREG:RegistryType, skos:Concept ;
-    skos:prefLabel "Graduatoria"@it, "Selection List"@en .
+PREG:Type-SelectionList a PREG:RegistryType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-type> ;
+    skos:prefLabel "Graduatoria"@it , "Selection List"@en .
 
-PREG:Type-QualifiedSupplierList a PREG:RegistryType, skos:Concept ;
-    skos:prefLabel "Elenco Fornitori Qualificati"@it, "Qualified Supplier List"@en .
+PREG:Type-QualifiedSupplierList a PREG:RegistryType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-type> ;
+    skos:prefLabel "Elenco Fornitori Qualificati"@it , "Qualified Supplier List"@en .
 
-PREG:Type-PublicInventory a PREG:RegistryType, skos:Concept ;
-    skos:prefLabel "Inventario Pubblico"@it, "Public Inventory"@en .
+PREG:Type-PublicInventory a PREG:RegistryType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-type> ;
+    skos:prefLabel "Inventario Pubblico"@it , "Public Inventory"@en .
 
-PREG:Type-EventCalendar a PREG:RegistryType, skos:Concept ;
-    skos:prefLabel "Calendario Eventi"@it, "Event Calendar"@en .
-
-
-# =============================================================================
-# ESEMPI DI ISTANZE
-# =============================================================================
-
-# -----------------------------------------------------------------------------
-# Esempio 1: Albo degli Ingegneri della Provincia di Roma
-# -----------------------------------------------------------------------------
-
-# Ordine (Organizzazione che pubblica)
-<https://w3id.org/italia/data/organization/ordine-ingegneri-roma>
-    a COV:Organization, ssn:OrdineProfessionale ;
-    COV:legalName "Ordine degli Ingegneri della Provincia di Roma"@it ;
-    rdfs:label "Ordine degli Ingegneri della Provincia di Roma"@it .
-
-# Albo Professionale
-<https://w3id.org/italia/data/registry/albo-ingegneri-roma>
-    a PREG:ProfessionalRegister ;
-    PREG:nome "Albo degli Ingegneri della Provincia di Roma"@it ;
-    PREG:descrizione "Albo professionale degli ingegneri abilitati all'esercizio della professione nella provincia di Roma"@it ;
-    PREG:baseNormativa "D.P.R. 328/2001" ;
-    PREG:dataIstituzione "1923-01-01"^^xsd:date ;
-    PREG:pubblicatoDa <https://w3id.org/italia/data/organization/ordine-ingegneri-roma> ;
-    PREG:tipoContenuto PREG:ContentType-Person ;
-    PREG:tipoRegistro PREG:Type-ProfessionalRegister ;
-    PREG:haSezione <https://w3id.org/italia/data/registry/albo-ingegneri-roma/sezione-a> ;
-    PREG:haSezione <https://w3id.org/italia/data/registry/albo-ingegneri-roma/sezione-b> .
-
-# Sezioni dell'Albo
-<https://w3id.org/italia/data/registry/albo-ingegneri-roma/sezione-a>
-    a PREG:RegistrySection ;
-    PREG:nome "Sezione A"@it ;
-    PREG:descrizione "Laureati magistrali in ingegneria"@it ;
-    PREG:sezioneDelRegistro <https://w3id.org/italia/data/registry/albo-ingegneri-roma> .
-
-<https://w3id.org/italia/data/registry/albo-ingegneri-roma/sezione-b>
-    a PREG:RegistrySection ;
-    PREG:nome "Sezione B"@it ;
-    PREG:descrizione "Laureati triennali in ingegneria"@it ;
-    PREG:sezioneDelRegistro <https://w3id.org/italia/data/registry/albo-ingegneri-roma> .
-
-# Ingegnere iscritto
-<https://w3id.org/italia/data/person/ing-mario-rossi>
-    a CPV:Person ;
-    CPV:givenName "Mario" ;
-    CPV:familyName "Rossi" ;
-    rdfs:label "Ing. Mario Rossi"@it .
-
-# Iscrizione all'Albo
-<https://w3id.org/italia/data/registry/albo-ingegneri-roma/iscrizione/12345>
-    a PREG:ProfessionalRegistration ;
-    PREG:identificativoVoce "A-12345" ;
-    PREG:dataIscrizione "2015-06-15"^^xsd:date ;
-    PREG:stato PREG:Status-Active ;
-    PREG:motivoIscrizione "Superamento esame di stato - sessione 2015/I" ;
-    PREG:inRegistro <https://w3id.org/italia/data/registry/albo-ingegneri-roma> ;
-    PREG:inSezione <https://w3id.org/italia/data/registry/albo-ingegneri-roma/sezione-a> ;
-    PREG:riferimentoA <https://w3id.org/italia/data/person/ing-mario-rossi> ;
-    PREG:annotazioni "Settore: Civile e Ambientale" .
-
-
-# -----------------------------------------------------------------------------
-# Esempio 2: Libro Soci di un'Associazione
-# -----------------------------------------------------------------------------
-
-<https://w3id.org/italia/data/organization/associazione-xyz>
-    a COV:Organization ;
-    COV:legalName "Associazione Culturale XYZ"@it ;
-    rdfs:label "Associazione Culturale XYZ"@it .
-
-<https://w3id.org/italia/data/registry/libro-soci-xyz>
-    a PREG:MembershipRoll ;
-    PREG:nome "Libro Soci - Associazione Culturale XYZ"@it ;
-    PREG:descrizione "Elenco dei soci dell'associazione"@it ;
-    PREG:baseNormativa "Statuto associativo art. 5" ;
-    PREG:dataIstituzione "2010-03-20"^^xsd:date ;
-    PREG:pubblicatoDa <https://w3id.org/italia/data/organization/associazione-xyz> ;
-    PREG:tipoContenuto PREG:ContentType-Person ;
-    PREG:tipoRegistro PREG:Type-MembershipRoll .
-
-<https://w3id.org/italia/data/person/lucia-bianchi>
-    a CPV:Person ;
-    CPV:givenName "Lucia" ;
-    CPV:familyName "Bianchi" ;
-    rdfs:label "Lucia Bianchi"@it .
-
-<https://w3id.org/italia/data/registry/libro-soci-xyz/iscrizione/00042>
-    a PREG:MembershipEntry ;
-    PREG:identificativoVoce "00042" ;
-    PREG:dataIscrizione "2018-01-10"^^xsd:date ;
-    PREG:stato PREG:Status-Active ;
-    PREG:motivoIscrizione "Domanda di ammissione approvata dal Consiglio Direttivo" ;
-    PREG:inRegistro <https://w3id.org/italia/data/registry/libro-soci-xyz> ;
-    PREG:riferimentoA <https://w3id.org/italia/data/person/lucia-bianchi> ;
-    PREG:annotazioni "Socio ordinario - quota annuale EUR 50" .
-
-
-# -----------------------------------------------------------------------------
-# Esempio 3: Graduatoria Concorso Pubblico
-# -----------------------------------------------------------------------------
-
-<https://w3id.org/italia/data/organization/ministero-interno>
-    a COV:Organization, COV:PublicOrganization ;
-    COV:legalName "Ministero dell'Interno"@it ;
-    rdfs:label "Ministero dell'Interno"@it .
-
-<https://w3id.org/italia/data/registry/graduatoria-concorso-funzionari-2024>
-    a PREG:SelectionList ;
-    PREG:nome "Graduatoria finale - Concorso 100 Funzionari Amministrativi"@it ;
-    PREG:descrizione "Graduatoria definitiva del concorso pubblico per 100 posti di Funzionario Amministrativo"@it ;
-    PREG:baseNormativa "Bando pubblicato in G.U. n. 45 del 15/06/2023" ;
-    PREG:dataIstituzione "2024-02-28"^^xsd:date ;
-    PREG:pubblicatoDa <https://w3id.org/italia/data/organization/ministero-interno> ;
-    PREG:tipoContenuto PREG:ContentType-Person ;
-    PREG:tipoRegistro PREG:Type-SelectionList .
-
-<https://w3id.org/italia/data/person/giovanni-verdi>
-    a CPV:Person ;
-    CPV:givenName "Giovanni" ;
-    CPV:familyName "Verdi" ;
-    rdfs:label "Giovanni Verdi"@it .
-
-<https://w3id.org/italia/data/registry/graduatoria-concorso-funzionari-2024/ammesso/001>
-    a PREG:AdmissionEntry ;
-    PREG:identificativoVoce "001" ;
-    PREG:posizione 1 ;
-    PREG:punteggio 92.50 ;
-    PREG:dataIscrizione "2024-02-28"^^xsd:date ;
-    PREG:stato PREG:Status-Active ;
-    PREG:inRegistro <https://w3id.org/italia/data/registry/graduatoria-concorso-funzionari-2024> ;
-    PREG:riferimentoA <https://w3id.org/italia/data/person/giovanni-verdi> ;
-    PREG:annotazioni "Vincitore - Idoneo all'assunzione" .
-
-
-# -----------------------------------------------------------------------------
-# Esempio 4: Registro Immobili Comunali
-# -----------------------------------------------------------------------------
-
-<https://w3id.org/italia/data/organization/comune-bologna>
-    a COV:Organization, COV:PublicOrganization ;
-    COV:legalName "Comune di Bologna"@it ;
-    rdfs:label "Comune di Bologna"@it .
-
-<https://w3id.org/italia/data/registry/inventario-immobili-bologna>
-    a PREG:AssetRegistry ;
-    PREG:nome "Inventario Beni Immobili del Comune di Bologna"@it ;
-    PREG:descrizione "Registro dei beni immobili di proprietà comunale"@it ;
-    PREG:baseNormativa "D.Lgs. 118/2011 - Armonizzazione contabile" ;
-    PREG:pubblicatoDa <https://w3id.org/italia/data/organization/comune-bologna> ;
-    PREG:tipoContenuto PREG:ContentType-RealEstate ;
-    PREG:tipoRegistro PREG:Type-PublicInventory .
-
-<https://w3id.org/italia/data/asset/immobile-piazza-maggiore-1>
-    a CLV:Feature ;
-    rdfs:label "Palazzo d'Accursio"@it ;
-    l0:description "Sede del Comune di Bologna - Piazza Maggiore 1"@it .
-
-<https://w3id.org/italia/data/registry/inventario-immobili-bologna/voce/IMM-00001>
-    a PREG:AssetRegistration ;
-    PREG:identificativoVoce "IMM-00001" ;
-    PREG:dataIscrizione "1995-01-01"^^xsd:date ;
-    PREG:stato PREG:Status-Active ;
-    PREG:inRegistro <https://w3id.org/italia/data/registry/inventario-immobili-bologna> ;
-    PREG:riferimentoA <https://w3id.org/italia/data/asset/immobile-piazza-maggiore-1> ;
-    PREG:annotazioni "Bene demaniale - Categoria: Edifici pubblici" .
-
-
-# -----------------------------------------------------------------------------
-# Esempio 5: Calendario Eventi Regionali
-# -----------------------------------------------------------------------------
-
-<https://w3id.org/italia/data/organization/regione-emilia-romagna>
-    a COV:Organization, COV:PublicOrganization ;
-    COV:legalName "Regione Emilia-Romagna"@it ;
-    rdfs:label "Regione Emilia-Romagna"@it .
-
-<https://w3id.org/italia/data/registry/calendario-eventi-er-2024>
-    a PREG:EventCalendar ;
-    PREG:nome "Calendario Manifestazioni Culturali Emilia-Romagna 2024"@it ;
-    PREG:descrizione "Elenco ufficiale delle manifestazioni culturali patrocinate dalla Regione"@it ;
-    PREG:pubblicatoDa <https://w3id.org/italia/data/organization/regione-emilia-romagna> ;
-    PREG:tipoContenuto PREG:ContentType-Event ;
-    PREG:tipoRegistro PREG:Type-EventCalendar .
-
-<https://w3id.org/italia/data/event/festival-filosofia-2024>
-    a CPEV:Event ;
-    rdfs:label "Festival Filosofia 2024"@it ;
-    l0:description "XXIV edizione del Festival Filosofia di Modena, Carpi e Sassuolo"@it .
-
-<https://w3id.org/italia/data/registry/calendario-eventi-er-2024/voce/EVT-2024-089>
-    a PREG:RegistryEntry ;
-    PREG:identificativoVoce "EVT-2024-089" ;
-    PREG:dataIscrizione "2024-01-15"^^xsd:date ;
-    PREG:stato PREG:Status-Active ;
-    PREG:inRegistro <https://w3id.org/italia/data/registry/calendario-eventi-er-2024> ;
-    PREG:riferimentoA <https://w3id.org/italia/data/event/festival-filosofia-2024> ;
-    PREG:annotazioni "Date: 13-15 settembre 2024 - Tema: Psiche" .
+PREG:Type-EventCalendar a PREG:RegistryType , skos:Concept ;
+    skos:inScheme <https://w3id.org/italia/controlled-vocabulary/PREG/registry-type> ;
+    skos:prefLabel "Calendario Eventi"@it , "Event Calendar"@en .
